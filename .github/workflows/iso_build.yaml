@@ -50,7 +50,6 @@ jobs:
         with:
           repository: manjaro-plasma/iso-profiles
           token: "${{ secrets.GITHUB_TOKEN }}"
-          ref: kde
           path: 'iso-profiles'
       -
         name: build
