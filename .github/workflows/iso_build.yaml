@@ -73,7 +73,8 @@ jobs:
           -t manjarosway/manjaro-iso
           
           FILE_PATH=$(find ./iso -type f -name "*.iso" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
-          cp $FILE_PATH .
+          zip -s 1900m $(basename $FILE_PATH).zip $FILE_PATH
+
           echo "FILE_PATH=$(basename $FILE_PATH)" >> $GITHUB_ENV
       - 
         id: upload_release 
@@ -83,8 +84,8 @@ jobs:
         with:
           upload_url: ${{ needs.prepare_release.outputs.upload_url }}
           asset_path: ./${{ env.FILE_PATH }}
-          asset_name: ${{ env.FILE_PATH }}
-          asset_content_type: application/x-iso-image
+          asset_name: ${{ env.FILE_PATH }}.z*
+          asset_content_type: application/zip
       - 
         name: rollback_release
         if: failure()
