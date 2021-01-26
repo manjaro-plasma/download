@@ -74,18 +74,29 @@ jobs:
           
           FILE_PATH=$(find ./iso -type f -name "*.iso" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
           zip -s 1900m $(basename $FILE_PATH).zip $FILE_PATH
+          ls -lasih .
 
           echo "FILE_PATH=$(basename $FILE_PATH)" >> $GITHUB_ENV
       - 
-        id: upload_release 
+        id: upload_release_zip
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.prepare_release.outputs.upload_url }}
-          asset_path: ./${{ env.FILE_PATH }}
-          asset_name: ${{ env.FILE_PATH }}.z*
+          asset_path: ./${{ env.FILE_PATH }}.zip
+          asset_name: ${{ env.FILE_PATH }}.zip
           asset_content_type: application/zip
+      - 
+        id: upload_release_z01
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare_release.outputs.upload_url }}
+          asset_path: ./${{ env.FILE_PATH }}.z01
+          asset_name: ${{ env.FILE_PATH }}.z01
+          asset_content_type: application/zip          
       - 
         name: rollback_release
         if: failure()
