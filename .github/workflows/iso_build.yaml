@@ -74,9 +74,13 @@ jobs:
           
           FILE_PATH=$(find ./iso -type f -name "*.iso" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
           zip -s 1900m $(basename $FILE_PATH).zip $FILE_PATH
-          ls -lasih .
-
+          sha256sum $(basename $FILE_PATH).z* > $(basename $FILE_PATH).sha256
           echo "FILE_PATH=$(basename $FILE_PATH)" >> $GITHUB_ENV
+          echo "FILE_SHA256=$(basename $FILE_PATH).sha256" >> $GITHUB_ENV
+          
+          FILE_PKG=$(find ./iso -type f -name "*-pkgs.txt" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
+          cp -v $FILE_PKG .
+          echo "FILE_PKG=$(basename $FILE_PKG)" >> $GITHUB_ENV
       - 
         id: upload_release_zip
         uses: actions/upload-release-asset@v1
@@ -96,7 +100,27 @@ jobs:
           upload_url: ${{ needs.prepare_release.outputs.upload_url }}
           asset_path: ./${{ env.FILE_PATH }}.z01
           asset_name: ${{ env.FILE_PATH }}.z01
-          asset_content_type: application/zip          
+          asset_content_type: application/zip
+      - 
+        id: upload_sha256
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare_release.outputs.upload_url }}
+          asset_path: ./${{ env.FILE_SHA256 }}
+          asset_name: ${{ env.FILE_SHA256 }}
+          asset_content_type: text/plain
+      - 
+        id: upload_pkg
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare_release.outputs.upload_url }}
+          asset_path: ./${{ env.FILE_PKG }}
+          asset_name: ${{ env.FILE_PKG }}
+          asset_content_type: text/plain    
       - 
         name: rollback_release
         if: failure()
