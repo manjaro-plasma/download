@@ -1,5 +1,5 @@
-# manjaro sway edition
-[![iso_build](https://github.com/manjaro-plasma/download/workflows/iso_build/badge.svg?event=repository_dispatch)](https://github.com/manjaro-plasma/download/actions)
+# Manjaro Plasma Editions
+[![iso_build](https://github.com/manjaro-plasma/download/workflows/iso_build/badge.svg)](https://github.com/manjaro-plasma/download/actions)
 
 ## description
 
