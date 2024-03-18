@@ -24,7 +24,7 @@ jobs:
     needs: [prepare-release]
     strategy:
       matrix:
-        EDITION: [kde]
+        EDITION: [kde-dev]
         BRANCH: [unstable]
         SCOPE: [minimal,full]
     steps:
