@@ -6,7 +6,7 @@ on:
 
 jobs:
   prepare-release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - 
         uses: styfle/cancel-workflow-action@0.9.0
@@ -20,12 +20,12 @@ jobs:
     outputs:
       release_tag: ${{ steps.time.outputs.time }}
   build-release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [prepare-release]
     strategy:
       matrix:
         EDITION: [kde]
-        BRANCH: [stable-staging]
+        BRANCH: [testing]
         SCOPE: [minimal,full]
     steps:
       - 
@@ -45,7 +45,7 @@ jobs:
           branch: ${{ matrix.branch }}
           scope: ${{ matrix.scope }}
           version: ${{ steps.time.outputs.time }}-development
-          kernel: linux513
+          kernel: linux612
           code-name: "Nightly-Build"
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
       -
