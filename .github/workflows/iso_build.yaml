@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         EDITION: [kde-dev]
-        KERNEL: [linux616,linux612]
+        KERNEL: [linux617,linux612]
         BRANCH: [unstable]
         SCOPE: [minimal,full]
     steps:
