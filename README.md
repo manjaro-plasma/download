@@ -11,8 +11,8 @@ Images are build and uploaded in a relatively regular interval to [github releas
 
 ## sources
 
-- [iso profile](https://github.com/manjaro-plasma/iso-profiles/tree/master/manjaro/kde)
-- [desktop settings](https://gitlab.manjaro.org/profiles-and-settings/manjaro-kde-settings)
+- [iso profile](https://code.manjaro.org/profiles/iso-profiles/src/branch/master/manjaro/kde-next)
+- [desktop settings](https://code.manjaro.org/profiles/manjaro-kde-settings)
 
 ## building
 
