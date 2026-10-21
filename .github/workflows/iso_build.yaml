@@ -8,11 +8,11 @@ jobs:
   prepare-release:
     runs-on: ubuntu-24.04
     steps:
-      - 
+      -
         uses: styfle/cancel-workflow-action@0.9.0
         with:
           access_token: ${{ github.token }}
-      - 
+      -
         id: time
         uses: nanzm/get-time-action@v1.1
         with:
@@ -24,20 +24,20 @@ jobs:
     needs: [prepare-release]
     strategy:
       matrix:
-        EDITION: [kde]
+        EDITION: [kde-next]
         KERNEL: [linux618,linux72]
         BRANCH: [unstable]
         SCOPE: [full]
     steps:
-      - 
+      -
         uses: styfle/cancel-workflow-action@0.9.0
         with:
           access_token: ${{ github.token }}
-      - 
+      -
         id: time
         uses: nanzm/get-time-action@v1.1
         with:
-          format: 'YY.MM'   
+          format: 'YY.MM'
       -
         name: image-build-upload
         uses: manjaro/manjaro-iso-action@main
